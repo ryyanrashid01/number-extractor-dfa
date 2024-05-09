@@ -3,7 +3,8 @@ class DFA {
     this.transitions = {
       q0: { " ": "q0", dollar: "q33", zero: "q3", digit: "q4" },
       q33: { digit: "q1" },
-      q1: { digit: "q1", decimal: "q2" },
+      q1: { digit: "q1", decimal: "q34" },
+      q34: { digit: "q2" },
       q2: { digit: "q2" },
       q3: { digit: "q5", decimal: "q27", f_slash: "q28", percent: "31" },
       q4: {
@@ -152,6 +153,7 @@ function findNumbers() {
         numbers.push(text.substring(tokenStart, i));
         number_indices.push([tokenStart, i]);
         state = "q0";
+        // If the character is a period, don't change the state to q0. Instead calculate where it would go using the transition method
         if (char == ".") {
           state = dfa.transition(lastState, char);
         }
