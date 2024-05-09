@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Number Extractor</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        color: #343a40;
+      }
+
+      a {
+        text-decoration: none;
+        color: white;
+      }
+
+      a:hover {
+        text-decoration: underline;
+        text-underline-offset: 5px;
+        text-decoration-thickness: 2px;
+      }
+
+      .container {
+        padding: 0.5rem 10rem;
+        max-width: 1500px;
+        margin: auto;
+      }
+
+      .title {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+        font-weight: 600;
+        color: white;
+        background-color: #343a40;
+      }
+
+      .title > .container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      button {
+        background-color: #ced4da;
+        border: 1px solid #adb5bd;
+        padding: 10px 25px;
+        font-weight: 600;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.1s ease-in-out all;
+        font-size: 15px;
+        margin-top: 2rem;
+      }
+
+      button:hover {
+        background-color: #adb5bd;
+        border: 1px solid #ced4da;
+      }
+
+      a.back-btn,
+      a.back-btn button {
+        border: none;
+        width: 50px;
+        height: 50px;
+        border-radius: 100%;
+        position: absolute;
+        left: 0px;
+        top: -45px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .disappear {
+        display: none;
+      }
+
+      #inputContainer,
+      #outputContainer {
+        margin: 5rem auto 3rem;
+        text-align: center;
+        position: relative;
+      }
+
+      #inputContainer > textarea,
+      #outputText,
+      #numberList,
+      #logs {
+        padding: 2rem;
+        border-radius: 5px;
+        width: 100%;
+      }
+
+      #inputContainer > textarea:focus {
+        outline: 0.5px #343a40 solid;
+      }
+
+      #inputContainer p {
+        font-weight: 500;
+        padding: 1rem;
+        outline: 1px solid #343a40;
+        border-radius: 5px;
+        width: fit-content;
+        margin: auto;
+        margin-top: 2rem;
+        background-color: #f9f9f9;
+      }
+
+      .back-btn {
+        text-align: left;
+        position: absolute;
+      }
+
+      #outputText {
+        border: 1px solid #ccc;
+        background-color: #f9f9f9;
+        width: 100%;
+        margin: auto;
+        text-align: justify;
+      }
+
+      .processing {
+        background-color: orange;
+      }
+
+      .number {
+        background-color: green;
+      }
+
+      .accepted {
+        display: inline-block;
+        background-color: rgb(168, 248, 168);
+      }
+
+      .highlight {
+        background-color: rgb(255, 194, 96) !important;
+      }
+
+      .extracted {
+        display: inline-block;
+      }
+
+      #numberList,
+      #logs {
+        margin-top: 2rem;
+        border: 1px solid #ccc;
+        background-color: #f9f9f9;
+        padding: 2rem;
+      }
+
+      #flowchart {
+        margin-top: 2rem;
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        flex-wrap: wrap;
+        max-width: 100%;
+      }
+
+      .state {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 60px;
+        width: 60px;
+        background-color: white;
+        border-radius: 100%;
+        border: 1px solid #343a40;
+        margin: 5px 10px;
+      }
+
+      .arrow {
+        font-size: 24px;
+      }
+
+      .nfa-diag {
+        width: 100%;
+        margin-bottom: 2rem;
+      }
+
+      .section-heading {
+        margin-bottom: 2rem;
+        text-align: center;
+      }
+
+      #nfa {
+        padding-bottom: 5rem;
+      }
+
+      #nfa p {
+        font-style: italic;
+        text-align: right;
+      }
+      #logs p a {
+        color: #0080ff;
+      }
+      .green {
+        background-color: rgb(168, 248, 168) !important;
+      }
+
+      .red {
+        background-color: rgb(255, 177, 177) !important;
+      }
+
+      .footer {
+        background-color: #343a40;
+        color: white;
+        text-align: center;
+        padding: 0.5rem;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="title">
+      <div class="container">
+        <h2>Number Extractor</h2>
+        <a href="#nfa">NFA</a>
+      </div>
+    </div>
+    <section class="app container">
+      <div id="inputContainer" class="">
+        <textarea
+          id="textInput"
+          rows="25"
+          placeholder="Enter text here ..."
+        ></textarea>
+        <br />
+        <button onclick="findNumbers()">Extract Numbers</button>
+        <p>
+          Accepted numeric inputs: Date, Time, Money, Decimal, Number, Fraction,
+          Percentage
+        </p>
+      </div>
+      <div id="outputContainer" class="disappear">
+        <h3>Results</h3>
+        <a href="index.html" class="back-btn"><button><</button></a>
+        <div id="outputText"></div>
+        <div id="numberList">
+          <h3>Numbers found</h3>
+          <br />
+        </div>
+        <div id="logs">
+          <h3>Flowchart</h3>
+          <p>
+            Scroll down to see the <a href="#nfa">NFA Diagram</a> for reference.
+          </p>
+          <div id="flowchart">
+            <span class="state">q0</span>
+          </div>
+          <br />
+        </div>
+      </div>
+    </section>
+    <section class="container" id="nfa">
+      <h2 class="section-heading">NFA Diagram</h2>
+      <img src="nfa.svg" class="nfa-diag" alt="NFA Diagram" srcset="" />
+      <p>Alphabet = {$, %, fs, h, d, s, c, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9}</p>
+      <p>
+        In the diagram: fs = forward slash (/) | h = hyphen (-) | d = decimal
+        (.) | c = colon(:) | s = space ( ) | digits = [0 to 9] | digits-0 = [1 -
+        9]
+      </p>
+    </section>
+    <script src="script.js"></script>
+    <div class="footer">
+      <div class="container">
+        Developed by: Mohammad Ryyan Rashid (155490) | Muhammad Haziq bin
+        Mohamad Wahid (154142)
+      </div>
+    </div>
+  </body>
+</html>

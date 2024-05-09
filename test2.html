@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Color Text</title>
+    <style>
+      .red {
+        background-color: rgba(255, 0, 0, 0.188);
+      }
+      .green {
+        background-color: rgb(164, 243, 164);
+      }
+      .bold {
+        font-weight: bold;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        font-family: "Helvetica Neue", Helvetica, Arial;
+        background-image: linear-gradient(
+          to bottom right,
+          rgb(250, 212, 212),
+          rgb(215, 247, 215)
+        );
+        flex-direction: column;
+      }
+      h1 {
+        color: #393939;
+      }
+      #myDiv {
+        background-color: rgb(246, 242, 242);
+        padding: 20px;
+        width: 70vw;
+        text-align: justify;
+        font-size: 15px;
+        line-height: 1.5;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Number Extractor</h1>
+    <div id="myDiv">
+      In the year 2024, the global population reached a staggering 8.5 billion
+      people, while the GDP of the world economy surpassed $100 trillion for the
+      first time in history. The average life expectancy rose to 80 years, with
+      over 50% of the population living in urban areas. The stock market saw
+      unprecedented highs, with the S&P 500 index reaching 5,000 points and
+      Bitcoin hitting a record price of $100,000 per coin. Meanwhile, scientists
+      made remarkable discoveries, such as the identification of over 10,000 new
+      species and the detection of gravitational waves from a black hole merger
+      3 billion light-years away. In technology, the number of internet users
+      exceeded 5 billion, and the total data generated globally surpassed 100
+      zettabytes. Amidst these numbers, the importance of sustainability and
+      climate action became more apparent, with efforts to reduce carbon
+      emissions by 50% by 2050 gaining traction. Additionally, in the realm of
+      sports, the FIFA World Cup attracted over 3 billion viewers, while the
+      Olympics saw a record number of participants from 200 countries.
+      Furthermore, in healthcare, the development of new vaccines and treatments
+      led to a significant decrease in mortality rates from diseases such as
+      malaria and HIV/AIDS. In education, the number of students enrolled in
+      higher education institutions surpassed 200 million, with online learning
+      platforms gaining popularity. Overall, the year 2024 was characterized by
+      remarkable progress and challenges across various fields, driven by the
+      power of numbers and human ingenuity. In the year 2024, the global
+      population reached a staggering 8.5 billion people, while the GDP of the
+      world economy surpassed $100 trillion for the first time in history. The
+      average life expectancy rose to 80 years, with over 50% of the population
+      living in urban areas. The stock market saw unprecedented highs, with the
+      S&P 500 index reaching 5,000 points and Bitcoin hitting a record price of
+      $100,000 per coin. Meanwhile, scientists made remarkable discoveries, such
+      as the identification of over 10,000 new species and the detection of
+      gravitational waves from a black hole merger 3 billion light-years away.
+      In technology, the number of internet users exceeded 5 billion, and the
+      total data generated globally surpassed 100 zettabytes. Amidst these
+      numbers, the importance of sustainability and climate action became more
+      apparent, with efforts to reduce carbon emissions by 50% by 2050 gaining
+      traction. Additionally, in the realm of sports, the FIFA World Cup
+      attracted over 3 billion viewers, while the Olympics saw a record number
+      of participants from 200 countries. Furthermore, in healthcare, the
+      development of new vaccines and treatments led to a significant decrease
+      in mortality rates from diseases such as malaria and HIV/AIDS. In
+      education, the number of students enrolled in higher education
+      institutions surpassed 200 million, with online learning platforms gaining
+      popularity. Overall, the year 2024 was characterized by remarkable
+      progress and challenges across various fields, driven by the power of
+      numbers and human ingenuity.In the year 2024, the global population
+      reached a staggering 8.5 billion people, while the GDP of the world
+      economy surpassed $100 trillion for the first time in history. The average
+      life expectancy rose to 80 years, with over 50% of the population living
+      in urban areas. The stock market saw unprecedented highs, with the S&P 500
+      index reaching 5,000 points and Bitcoin hitting a record price of $100,000
+      per coin. Meanwhile, scientists made remarkable discoveries, such as the
+      identification of over 10,000 new species and the detection of
+      gravitational waves from a black hole merger 3 billion light-years away.
+      In technology, the number of internet users exceeded 5 billion, and the
+      total data generated globally surpassed 100 zettabytes. Amidst these
+      numbers, the importance of sustainability and climate action became more
+      apparent, with efforts to reduce carbon emissions by 50% by 2050 gaining
+      traction. Additionally, in the realm of sports, the FIFA World Cup
+      attracted over 3 billion viewers, while the Olympics saw a record number
+      of participants from 200 countries. Furthermore, in healthcare, the
+      development of new vaccines and treatments led to a significant decrease
+      in mortality rates from diseases such as malaria and HIV/AIDS. In
+      education, the number of students enrolled in higher education
+      institutions surpassed 200 million, with online learning platforms gaining
+      popularity. Overall, the year 2024 was characterized by remarkable
+      progress and challenges across various fields, driven by the power of
+      numbers and human ingenuity.
+    </div>
+
+    <script>
+      var text = document.getElementById("myDiv").textContent;
+      var spans = [];
+      var currentIndex = 0;
+      document.getElementById("myDiv").innerHTML = "";
+      var interval = setInterval(changeColor, 10);
+
+      // Create spans for each character initially
+      for (var i = 0; i < text.length; i++) {
+        var char = text.charAt(i);
+        var span = document.createElement("span");
+
+        if (/[a-zA-Z]/.test(char)) {
+          span.textContent = char;
+        } else if (/[0-9]/.test(char)) {
+          span.textContent = char;
+        } else {
+          span.textContent = char;
+        }
+
+        document.getElementById("myDiv").appendChild(span);
+        spans.push(span);
+      }
+
+      function changeColor() {
+        if (currentIndex >= spans.length) {
+          clearInterval(interval);
+          return;
+        }
+
+        var currentSpan = spans[currentIndex];
+        var char = text.charAt(currentIndex);
+
+        if (/[0-9]/.test(char)) {
+          currentSpan.classList.add("green", "bold");
+        } // else if (/\s/.test(char)) {
+        // Do nothing for whitespace characters
+        else if (char === "," || char === ".") {
+          // Check if the previous and next characters form a number
+          var next_char = text.charAt(currentIndex + 1);
+          if (/[0-9]/.test(next_char)) {
+            currentSpan.classList.add("green", "bold");
+          } else {
+            currentSpan.classList.add("red");
+          }
+        } else {
+          currentSpan.classList.add("red");
+        }
+
+        currentIndex++;
+      }
+    </script>
+  </body>
+</html>
