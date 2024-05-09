@@ -135,7 +135,9 @@ function findNumbers() {
     // OR if the character is a-z, A-Z or comma and the last state is accepted then add it to the list
     else if (
       (char == "." && (text.charAt(i + 1) == " " || i == text.length - 1)) ||
-      (dfa.acceptingStates.includes(lastState) && /^[a-zA-Z,]$/.test(char))
+      (dfa.acceptingStates.includes(lastState) &&
+        /^[a-zA-Z,]$/.test(char) &&
+        text.charAt(i + 1) == " ")
     ) {
       // If the character is a comma and the last state is accepted and comma is followed by digits then go to q0
       if (
