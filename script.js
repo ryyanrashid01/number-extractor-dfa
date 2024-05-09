@@ -152,6 +152,9 @@ function findNumbers() {
         numbers.push(text.substring(tokenStart, i));
         number_indices.push([tokenStart, i]);
         state = "q0";
+        if (char == ".") {
+          state = dfa.transition(lastState, char);
+        }
         console.log(3, lastState, char, state);
         appendGraph(dfa, char, state);
         lastState = "q0";
